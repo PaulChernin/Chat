@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Container>
-      <ChatWindow>
-        <ChatMessage username="Ivan" time="21.12.2019 05:00:50">Hello, World!!!</ChatMessage>
+      <ChatWindow @send-message="sendMessage">
+        <ChatMessage v-for="message in data" username="Ivan" :datetime="datetime">{{message}}</ChatMessage>
       </ChatWindow>
     </Container>
   </div>
@@ -22,6 +22,13 @@
       Container,
       ChatWindow,
       ChatMessage
+    },
+    methods: {
+      sendMessage() {  
+        obj.nickname , obj.message
+        axios.post('')
+
+      }
     }
   }
 </script>
