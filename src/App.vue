@@ -2,7 +2,8 @@
   <div id="app">
     <Container>
       <ChatWindow @send-message="sendMessage">
-        <ChatMessage v-for="message in data" username="Ivan" :datetime="datetime">{{message}}</ChatMessage>
+        <!-- <ChatMessage v-for="message in sampleMessages" v-bind:key="message.id" v-bind:username="message.author" v-bind:datetime="message.datetime">{{message.text}}</ChatMessage> -->
+        <ChatMessage v-for="message in messages" v-bind:key="message.id" v-bind:username="message.author" v-bind:datetime="message.datetime">{{message.text}}</ChatMessage>
       </ChatWindow>
     </Container>
   </div>
@@ -15,6 +16,8 @@
   import ChatMessage from './components/ChatMessage.vue'
   import ChatWindow from './components/ChatWindow.vue'
 
+  import axios from 'axios'
+
   export default {
     name: 'app',
     components: {
@@ -23,10 +26,48 @@
       ChatWindow,
       ChatMessage
     },
+    mounted() {
+      this.getMessages()
+    },
+    data() {
+      return {
+        messages: [{}],
+        sampleMessages: [
+          {
+            id: '1',
+            author: 'vasya',
+            datetime: '1234',
+            text: 'lolkek'
+          }, {
+            id: '2',
+            author: 'petya',
+            datetime: '12345',
+            text: 'cheburek'
+          }
+        ]
+      }
+    },
     methods: {
-      sendMessage() {  
-        obj.nickname , obj.message
-        axios.post('')
+      getMessages() {
+        axios.get("http://188.225.47.187/api/chat/getmessages.php")
+        .then( (response)=> {
+          console.log('got')
+            //let response = [{}]
+            //let resp = JSON.parse(response.data)
+            console.log('response', response)
+          this.messages = response.data
+        })
+      },
+      sendMessage(data) { 
+        console.log('sent')
+        axios.post('http://188.225.47.187/api/chat/sendmessage.php', {
+          author: data.username,
+          text: data.text
+        })
+        .then(() => {
+          console.log('posted')
+          this.getMessages()
+        })
 
       }
     }

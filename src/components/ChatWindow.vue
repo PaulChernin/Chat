@@ -6,9 +6,9 @@
             </div>
         </div>
         <div class="chat-send-panel">
-            <input v-model="nickname" type="text" placeholder="Ваш никнейм..." class="chat-send-name-field" />
-            <input v-model="message" type="text" placeholder="Сообщение..." class="chat-send-message-field"/>
-            <button @click="$emit('send-message', {nickname, message})">
+            <input v-model="username" type="text" placeholder="Ваш никнейм..." class="chat-send-name-field" />
+            <input v-model="text" type="text" placeholder="Сообщение..." class="chat-send-message-field"/>
+            <button @click="$emit('send-message', {username, text})">
                 <img src="/img/send.png" />
             </button>
         </div>
@@ -16,28 +16,12 @@
 </template>
 
 <script>
-    import axios from 'axios'
-
     export default {
         name: 'ChatWindow',
         data() {
             return {
-                
-            }
-        },
-        mounted() {
-
-        },
-        methods: {
-            getMessages() {
-                axios.get(http://188.225.47.187/api/chat/getmessages.php)
-                .then( ())=> {
-                    let response = [{}]
-                    let resp = JSON.parse(response.data)
-                    console.log('response', response)
-                    this.data = response
-
-                }
+                text: '',
+                username: ''
             }
         }
     }
